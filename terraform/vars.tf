@@ -9,6 +9,12 @@ variable "proxmox_host" {
 variable "template_name" {
     default = "okd-master1"
 }
-variable "fedora_core_iso" {
-    default = "directory-hd2tb:iso/fedora-coreos-34.20211004.3.1-live.x86_64.iso"
+variable "fedora_core_iso_bootstrap" {
+    default = "directory-hd2tb:iso/fcos-bootstrap.iso"
+}
+variable "fedora_core_iso_master" {
+    default = "directory-hd2tb:iso/fcos-master.iso"
+}
+variable "fedora_core_iso_worker" {
+    default = "directory-hd2tb:iso/fcos-worker.iso"
 }

@@ -1,4 +1,8 @@
 *.tfstate
 .terraform.lock.hcl
 .terraform/
+terraform.tfstate*
 *.log
+release/
+install_dir/
+.idea/

@@ -8,7 +8,8 @@ if [ "$REPLY" = "y" ]; then
       sudo qm stop $vmid
       sudo qm destroy $vmid
    done
-   rm terraform.tfstate*
+   sudo rm -f terraform.tfstate*
+   sudo rm -f .terraform.lock.hcl
 else
    echo "Canceled."
 fi

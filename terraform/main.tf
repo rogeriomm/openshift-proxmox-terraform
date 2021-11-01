@@ -28,7 +28,7 @@ provider "proxmox" {
     _default    = "debug"
     _capturelog = ""
   }
-  pm_timeout = 300000
+  pm_timeout = 500
 }
 
 resource "proxmox_vm_qemu" "okd4-bootstrap" {
@@ -40,9 +40,9 @@ resource "proxmox_vm_qemu" "okd4-bootstrap" {
   sockets = 1
   cores = 8
   target_node = "pve"
-  iso = var.fedora_core_iso
+  iso = var.fedora_core_iso_bootstrap
   onboot = false
-  agent = 1
+  agent = 0 
   pool = "openshift"
   numa = false
   scsihw = "virtio-scsi-single"
@@ -55,7 +55,7 @@ resource "proxmox_vm_qemu" "okd4-bootstrap" {
 
   disk  {
     type  = "virtio"
-    storage = "storage-hd2tb"
+    storage = "local-lvm"
     size = "120G"
     iothread = 1
   }
@@ -78,9 +78,9 @@ resource "proxmox_vm_qemu" "okd4-control-plane-1" {
   sockets = 1
   cores = 8
   target_node = "pve"
-  iso = var.fedora_core_iso
+  iso = var.fedora_core_iso_master
   onboot = false
-  agent = 1
+  agent = 0 
   pool = "openshift"
   numa = false
   scsihw = "virtio-scsi-single"
@@ -93,7 +93,7 @@ resource "proxmox_vm_qemu" "okd4-control-plane-1" {
 
   disk  {
     type  = "virtio"
-    storage = "storage-hd2tb"
+    storage = "local-lvm"
     size = "120G"
     iothread = 1
   }
@@ -116,9 +116,9 @@ resource "proxmox_vm_qemu" "okd4-control-plane-2" {
   sockets = 1
   cores = 8
   target_node = "pve"
-  iso = var.fedora_core_iso
+  iso = var.fedora_core_iso_master
   onboot = false
-  agent = 1
+  agent = 0 
   pool = "openshift"
   numa = false
   scsihw = "virtio-scsi-single"
@@ -131,7 +131,7 @@ resource "proxmox_vm_qemu" "okd4-control-plane-2" {
 
   disk  {
     type  = "virtio"
-    storage = "storage-hd2tb"
+    storage = "local-lvm"
     size = "120G"
     iothread = 1
   }
@@ -154,9 +154,9 @@ resource "proxmox_vm_qemu" "okd4-control-plane-3" {
   sockets = 1
   cores = 8
   target_node = "pve"
-  iso = var.fedora_core_iso
+  iso = var.fedora_core_iso_master
   onboot = false
-  agent = 1
+  agent = 0 
   pool = "openshift"
   numa = false
   scsihw = "virtio-scsi-single"
@@ -169,7 +169,7 @@ resource "proxmox_vm_qemu" "okd4-control-plane-3" {
 
   disk  {
     type  = "virtio"
-    storage = "storage-hd2tb"
+    storage = "local-lvm"
     size = "120G"
     iothread = 1
   }
@@ -192,9 +192,9 @@ resource "proxmox_vm_qemu" "okd4-compute-1" {
   sockets = 1
   cores = 8
   target_node = "pve"
-  iso = var.fedora_core_iso
+  iso = var.fedora_core_iso_worker
   onboot = false
-  agent = 1
+  agent = 0 
   pool = "openshift"
   numa = false
   scsihw = "virtio-scsi-single"
@@ -207,7 +207,7 @@ resource "proxmox_vm_qemu" "okd4-compute-1" {
 
   disk  {
     type  = "virtio"
-    storage = "storage-hd2tb"
+    storage = "ssd1tb"
     size = "120G"
     iothread = 1
   }
@@ -230,9 +230,9 @@ resource "proxmox_vm_qemu" "okd4-compute-2" {
   sockets = 1
   cores = 8
   target_node = "pve"
-  iso = var.fedora_core_iso
+  iso = var.fedora_core_iso_worker
   onboot = false
-  agent = 1
+  agent = 0 
   pool = "openshift"
   #qemu_os = "linux"
   numa = false
@@ -245,7 +245,7 @@ resource "proxmox_vm_qemu" "okd4-compute-2" {
 
   disk  {
     type  = "virtio"
-    storage = "storage-hd2tb"
+    storage = "ssd1tb"
     size = "120G"
     iothread = 1
   }
@@ -268,9 +268,9 @@ resource "proxmox_vm_qemu" "okd4-compute-3" {
   sockets = 1
   cores = 8
   target_node = "pve"
-  iso = var.fedora_core_iso
+  iso = var.fedora_core_iso_worker
   onboot = false
-  agent = 1
+  agent = 0 
   pool = "openshift"
   #qemu_os = "linux"
   numa = false
@@ -283,7 +283,7 @@ resource "proxmox_vm_qemu" "okd4-compute-3" {
 
   disk  {
     type  = "virtio"
-    storage = "storage-hd2tb"
+    storage = "ssd1tb"
     size = "120G"
     iothread = 1
   }
@@ -296,3 +296,4 @@ resource "proxmox_vm_qemu" "okd4-compute-3" {
     queues = 2
   }
 }
+

@@ -23,4 +23,4 @@ sudo qm showcmd 801 --pretty
            * https://forum.proxmox.com/threads/howto-startup-vm-using-an-ignition-file.63782/: PROXMOX Howto startup VM using an ignition file
    * https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
    * https://github.com/TribalNightOwl/okd4-esxi-infra/blob/master/terraform/main.tf
-
+   * https://coreos.github.io/ignition/examples/#set-kernel-arguments: Ignition, Set Kernel Arguments
