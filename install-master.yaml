@@ -16,7 +16,6 @@ storage:
           dns-search=world.xpt
           may-fail=false
           method=manual
-  files:
     # https://coreos.github.io/ignition/configuration-v3_3/
     - path: /etc/target.ign
       contents:

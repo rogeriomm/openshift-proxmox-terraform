@@ -14,21 +14,27 @@ remove_ssh_keys()
 {
   echo "Removing ssh known hosts..."
 
-  ssh-keygen -f -R "okd4-control-plane-1" 2> /dev/null
-  ssh-keygen -f -R "okd4-control-plane-2" 2> /dev/null
-  ssh-keygen -f -R "okd4-control-plane-3" 2> /dev/null
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-control-plane-1" 2> /dev/null
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-control-plane-2" 2> /dev/null
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-control-plane-3" 2> /dev/null
 
-  ssh-keygen -f -R "okd4-compute-1" 2> /dev/null
-  ssh-keygen -f -R "okd4-compute-2" 2> /dev/null
-  ssh-keygen -f -R "okd4-compute-3" 2> /dev/null
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-compute-1" 2> /dev/null
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-compute-2" 2> /dev/null
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-compute-3" 2> /dev/null
 
-  ssh-keygen -f -R "okd4-bootstrap" 2> /dev/null
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-bootstrap" 2> /dev/null
 }
 
 coreos_installer()
 {
   docker run --privileged --pull=always --rm --mount type=bind,source=$PWD,target=/data -w /data \
 	quay.io/coreos/coreos-installer:release $@ 
+}
+
+butane()
+{
+  docker run --privileged --pull=always --rm --mount type=bind,source=$PWD,target=/data -w /data \
+	quay.io/coreos/butane:release $@
 }
 
 download_iso()
@@ -72,6 +78,12 @@ mkdir -p $RELEASE_DIR
 
 echo "Download iso file"
 download_iso $RELEASE_DIR
+
+echo "Create ignition files"
+rm -f install-{bootstrap,master,worker}.ign
+butane install-bootstrap.yaml -o install-bootstrap.ign
+butane install-master.yaml -o install-master.ign
+butane install-worker.yaml -o install-worker.ign
 
 echo "Change original iso file, add ignition file"
 coreos_installer iso ignition embed -i install-bootstrap.ign $RELEASE_DIR/fedora-coreos-*-live.x86_64.iso -o $RELEASE_DIR/fcos-bootstrap.iso

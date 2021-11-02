@@ -8,21 +8,6 @@ storage:
       contents:
        source: http://192.168.2.201:8080/okd4/bootstrap.ign
       mode: 0644
-  files:
-    - path: /etc/NetworkManager/system-connections/ens18.nmconnection
-      mode: 0600
-      contents:
-        inline: |
-          [connection]
-          id=ens18
-          type=ethernet
-          interface-name=ens18
-          [ipv4]
-          address1=192.168.2.110/24,192.168.2.200
-          dns=192.168.2.201;
-          dns-search=
-          may-fail=false
-          method=manual
 systemd:
   units:
     - name: my-coreos-installer.service
