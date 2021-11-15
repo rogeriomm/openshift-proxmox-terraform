@@ -53,6 +53,10 @@ download_xz()
   popd
 }
 
+if [[ ! -a install-config.yaml ]]; then
+  echo "File install-config.yaml not found"
+  exit 255
+fi
 
 are_you_sure
 
@@ -71,7 +75,7 @@ rm -f $RELEASE_DIR/fcos-{bootstrap,master,worker}.iso
 rm -f $ISO_DEST_DIR/fcos-{bootstrap,master,worker}.iso
 
 echo "Create install directory"
-mkdir -p $INSTALL_DIR 
+rm -rf $INSTALL_DIR ; mkdir -p $INSTALL_DIR
 
 echo "Create release directory"
 mkdir -p $RELEASE_DIR 
@@ -114,10 +118,13 @@ cp $RELEASE_DIR/fcos-master.iso    $ISO_DEST_DIR
 cp $RELEASE_DIR/fcos-worker.iso    $ISO_DEST_DIR
 chmod 444 $RELEASE_DIR/fcos-{bootstrap,master,worker}.iso
 
+sudo cp $RELEASE_DIR/fcos-raw.xz     $OKD4_DIR
+sudo cp $RELEASE_DIR/fcos-raw.xz.sig $OKD4_DIR
+
 sudo cp -R $INSTALL_DIR/* $OKD4_DIR
 
-sudo chown -R www-data:root /var/www/html/okd4
-sudo chmod -R 755 /var/www/html/okd4
+sudo chown -R www-data:root $OKD4_DIR
+sudo chmod -R 755 $OKD4_DIR
 
 remove_ssh_keys
 
