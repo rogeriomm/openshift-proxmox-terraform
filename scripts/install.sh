@@ -3,26 +3,46 @@
 are_you_sure()
 {
   read -q "REPLY?Install ? "
-  echo "\n"
+  printf "\n"
 
   if [ "$REPLY" = "n" ]; then
     exit
   fi	  
 }
 
+remove_ssh_key()
+{
+  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "$1" 2> /dev/null
+}
+
 remove_ssh_keys()
 {
   echo "Removing ssh known hosts..."
 
-  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-control-plane-1" 2> /dev/null
-  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-control-plane-2" 2> /dev/null
-  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-control-plane-3" 2> /dev/null
+  remove_ssh_key "192.168.2.101"
+  remove_ssh_key "192.168.2.102"
+  remove_ssh_key "192.168.2.103"
 
-  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-compute-1" 2> /dev/null
-  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-compute-2" 2> /dev/null
-  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-compute-3" 2> /dev/null
+  remove_ssh_key "192.168.2.104"
+  remove_ssh_key "192.168.2.105"
+  remove_ssh_key "192.168.2.106"
 
-  ssh-keygen -f "$HOME/.ssh/known_hosts" -R "okd4-bootstrap" 2> /dev/null
+  remove_ssh_key "192.168.2.110"
+
+  remove_ssh_key "okd4-control-plane-1"
+  remove_ssh_key "okd4-control-plane-2"
+  remove_ssh_key "okd4-control-plane-3"
+
+  remove_ssh_key "okd4-compute-1"
+  remove_ssh_key "okd4-compute-2"
+  remove_ssh_key "okd4-compute-2"
+
+  remove_ssh_key "okd4-bootstrap"
+}
+
+okd_wait_for_bootstrap_complete()
+{
+  openshift-install --dir=install_dir/ wait-for bootstrap-complete --log-level=info
 }
 
 coreos_installer()
@@ -131,3 +151,6 @@ remove_ssh_keys
 echo "Testing..."
 curl localhost:8080/okd4/metadata.json
 
+#okd_wait_for_bootstrap_complete
+
+# Login to the cluster and approve CSRs
