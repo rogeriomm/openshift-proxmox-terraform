@@ -48,25 +48,25 @@ okd_wait_for_bootstrap_complete()
 coreos_installer()
 {
   docker run --privileged --pull=always --rm --mount type=bind,source=$PWD,target=/data -w /data \
-	quay.io/coreos/coreos-installer:release $@ 
+	        quay.io/coreos/coreos-installer:release "$@"
 }
 
 butane()
 {
   docker run --privileged --pull=always --rm --mount type=bind,source=$PWD,target=/data -w /data \
-	quay.io/coreos/butane:release $@
+	        quay.io/coreos/butane:release "$@"
 }
 
 download_iso()
 {
-  coreos_installer download -s stable -p metal -f iso --directory $1
+  coreos_installer download -s stable -p metal -f iso --directory "$1"
 }
 
 
 download_xz()
 {
-  coreos_installer download -s stable -p metal -f raw.xz --directory $1
-  pushd . ; cd $1
+  coreos_installer download -s stable -p metal -f raw.xz --directory "$1"
+  pushd . ; cd "$1"
   rm -f fcos.raw.xz fcos.raw.xz.sig
   ln -s fedora-coreos-*-metal.x86_64.raw.xz fcos.raw.xz
   ln -s fedora-coreos-*-metal.x86_64.raw.xz.sig fcos.raw.xz.sig
@@ -138,8 +138,8 @@ cp $RELEASE_DIR/fcos-master.iso    $ISO_DEST_DIR
 cp $RELEASE_DIR/fcos-worker.iso    $ISO_DEST_DIR
 chmod 444 $RELEASE_DIR/fcos-{bootstrap,master,worker}.iso
 
-sudo cp $RELEASE_DIR/fcos-raw.xz     $OKD4_DIR
-sudo cp $RELEASE_DIR/fcos-raw.xz.sig $OKD4_DIR
+sudo cp $RELEASE_DIR/fcos.raw.xz     $OKD4_DIR
+sudo cp $RELEASE_DIR/fcos.raw.xz.sig $OKD4_DIR
 
 sudo cp -R $INSTALL_DIR/* $OKD4_DIR
 
