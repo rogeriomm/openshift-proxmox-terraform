@@ -78,6 +78,8 @@ if [[ ! -a install-config.yaml ]]; then
   exit 255
 fi
 
+openshift-install version
+
 are_you_sure
 
 set -x
