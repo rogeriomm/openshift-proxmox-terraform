@@ -73,6 +73,8 @@ download_xz()
   popd
 }
 
+set -e
+
 if [[ ! -a install-config.yaml ]]; then
   echo "File install-config.yaml not found"
   exit 255
