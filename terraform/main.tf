@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "okd4-bootstrap" {
   boot = "order=virtio0;ide2"
 
   vga {
-    type = "virtio"
+    type = "vmware"
   }
 
   disk  {
@@ -90,7 +90,7 @@ resource "proxmox_vm_qemu" "okd4-control-plane-1" {
   boot = "order=virtio0;ide2"
 
   vga {
-    type = "virtio"
+    type = "vmware"
   }
 
   disk  {
@@ -129,7 +129,7 @@ resource "proxmox_vm_qemu" "okd4-control-plane-2" {
   boot = "order=virtio0;ide2"
 
   vga {
-    type = "virtio"
+    type = "vmware"
   }
 
   disk  {
@@ -168,7 +168,7 @@ resource "proxmox_vm_qemu" "okd4-control-plane-3" {
   boot = "order=virtio0;ide2"
 
   vga {
-    type = "virtio"
+    type = "vmware"
   }
 
   disk  {
@@ -207,7 +207,7 @@ resource "proxmox_vm_qemu" "okd4-compute-1" {
   boot = "order=virtio0;ide2"
 
   vga {
-    type = "virtio"
+    type = "vmware"
   }
 
   disk  {
@@ -246,7 +246,7 @@ resource "proxmox_vm_qemu" "okd4-compute-2" {
   boot = "order=virtio0;ide2"
 
   vga {
-    type = "virtio"
+    type = "vmware"
   }
 
   disk  {
@@ -285,7 +285,7 @@ resource "proxmox_vm_qemu" "okd4-compute-3" {
   boot = "order=virtio0;ide2"
 
   vga {
-    type = "virtio"
+    type = "vmware"
   }
 
   disk  {
@@ -303,4 +303,3 @@ resource "proxmox_vm_qemu" "okd4-compute-3" {
     queues = 2
   }
 }
-
